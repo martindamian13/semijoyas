@@ -29,3 +29,7 @@ def about(request):
 def contact(request):
     context = {}
     return render(request, 'store/contact.html', context)
+
+def detail(request):
+    context = {}
+    return render(request, 'store/product-detail.html', context)
