@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+
 from .models import *
 
 # Create your views here.
@@ -8,7 +10,10 @@ def home(request):
     return render(request, 'store/home.html', context)
 
 def product(request):
-    context = {}
+    products = Product.objects.all()
+    context = {
+        'products':products
+    }
     return render(request, 'store/product.html', context)
 
 def cart(request):
@@ -22,14 +27,20 @@ def cart(request):
     context = {'items':items, 'order':order}
     return render(request, 'store/cart.html', context)
 
-def about(request):
+def howto(request):
     context = {}
-    return render(request, 'store/about.html', context)
+    return render(request, 'store/howto.html', context)
 
 def contact(request):
     context = {}
     return render(request, 'store/contact.html', context)
 
-def detail(request):
-    context = {}
+def detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    context = {
+        "product": product
+    }
     return render(request, 'store/product-detail.html', context)
+
+def updateItem(request):
+    return JsonResponse('Item was added', safe=False)
