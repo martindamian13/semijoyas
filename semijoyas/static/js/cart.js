@@ -21,8 +21,8 @@ function updateUserOrder(productId, action){
   var url = '/update_item'
 
   fetch(url, {
-    method: 'POST'
-    header:{
+    method: 'POST',
+    headers:{
       'Content-Type' : 'application/json',
       'X-CSRFToken': csrftoken,
     },
