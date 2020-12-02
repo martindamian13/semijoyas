@@ -12,9 +12,8 @@ def home(request):
 
 def product(request):
     products = Product.objects.all()
-    context = {
-        'products':products
-    }
+    categorias = Product.objects.get()
+    context = {'products':products, 'categorias':categorias}
     return render(request, 'store/product.html', context)
 
 def cart(request):
@@ -38,10 +37,16 @@ def contact(request):
 
 def detail(request, product_id):
     product = Product.objects.get(id=product_id)
-    context = {
-        "product": product
-    }
+    context = {"product": product}
     return render(request, 'store/product-detail.html', context)
+
+def category(request, categoria):
+    product = Product.objects.get(categoria=categoria)
+    context = {"product": product}
+    return render(request, 'store/categoria.html', context)
+
+
+
 
 def updateItem(request):
     data = json.loads(request.body)
@@ -65,5 +70,5 @@ def updateItem(request):
 
     if orderItem.quantity <=0:
         orderItem.delete()
-    
+
     return JsonResponse('Item was added', safe=False)
