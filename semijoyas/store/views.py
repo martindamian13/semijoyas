@@ -6,14 +6,32 @@ from .models import *
 
 # Create your views here.
 def home(request):
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
     products = Product.objects.all()
-    context = {'products':products}
+    context = {'products':products, 'items':items, 'order':order}
     return render(request, 'store/home.html', context)
 
 def product(request):
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+
     products = Product.objects.all()
-    #categorias =
-    context = {'products':products, 'categorias':categorias}
+    context = {'products':products, 'items':items, 'order':order}
     return render(request, 'store/product.html', context)
 
 def cart(request):
@@ -24,25 +42,66 @@ def cart(request):
     else:
         items = []
         order = {'get_cart_total':0, 'get_cart_items':0}
+    
     context = {'items':items, 'order':order}
     return render(request, 'store/cart.html', context)
 
 def howto(request):
-    context = {}
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+
+    context = {'items':items, 'order':order}
     return render(request, 'store/howto.html', context)
 
 def contact(request):
-    context = {}
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+
+    context = {'items':items, 'order':order}
     return render(request, 'store/contact.html', context)
 
 def detail(request, product_id):
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+
     product = Product.objects.get(id=product_id)
-    context = {"product": product}
+    context = {"product": product, 'items':items, 'order':order}
     return render(request, 'store/product-detail.html', context)
 
 def category(request, categoria):
+    #Cart
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        items = order.orderitem_set.all()
+    else:
+        items = []
+        order = {'get_cart_total':0, 'get_cart_items':0}
+
+
     product = Product.objects.get(categoria=categoria)
-    context = {"product": product}
+    context = {"product": product, 'items':items, 'order':order}
     return render(request, 'store/categoria.html', context)
 
 
